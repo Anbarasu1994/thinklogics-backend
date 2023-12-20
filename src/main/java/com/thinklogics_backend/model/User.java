@@ -1,11 +1,11 @@
 package com.thinklogics_backend.model;
 
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,12 +18,11 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-@Entity
+@Document(collection = "users") // MongoDB-specific annotation for collection name
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private String userId; // Using String for MongoDB's ObjectId
 
     private String firstName;
     private String lastName;
@@ -35,7 +34,7 @@ public class User implements UserDetails {
 
     private String status;
     private String otp; // New field to store the OTP
-    @Enumerated(EnumType.STRING)
+
     private ERole role;
 
     @Override

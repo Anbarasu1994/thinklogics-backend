@@ -26,7 +26,7 @@ public class SessionAttendeeService {
         return attendeeRepository.findAll();
     }
 
-    public Optional<SessionAttendee> getAttendeeById(Long id) {
+    public Optional<SessionAttendee> getAttendeeById(String id) {
         return attendeeRepository.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class SessionAttendeeService {
         return attendeeRepository.save(attendee);
     }
 
-    public void deleteAttendeeById(Long id) {
+    public void deleteAttendeeById(String id) {
         attendeeRepository.deleteById(id);
     }
     public boolean checkUserExistsByPhoneNumber(String phoneNumber) {

@@ -55,7 +55,7 @@ public class VisitorsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Visitors> getVisitorById(@PathVariable Long id) {
+    public ResponseEntity<Visitors> getVisitorById(@PathVariable String id) {
         return visitorsService.getVisitorById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -63,7 +63,7 @@ public class VisitorsController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Visitors> updateVisitor(@PathVariable Long id, @RequestBody Visitors visitor) {
+    public ResponseEntity<Visitors> updateVisitor(@PathVariable String id, @RequestBody Visitors visitor) {
         if (!visitorsService.getVisitorById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -73,7 +73,7 @@ public class VisitorsController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVisitor(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteVisitor(@PathVariable String id) {
         if (!visitorsService.getVisitorById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }

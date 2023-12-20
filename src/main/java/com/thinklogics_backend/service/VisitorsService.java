@@ -22,7 +22,7 @@ public class VisitorsService {
         return visitorsRepository.findAll();
     }
 
-    public Optional<Visitors> getVisitorById(Long id) {
+    public Optional<Visitors> getVisitorById(String id) {
         return visitorsRepository.findById(id);
     }
 
@@ -30,7 +30,7 @@ public class VisitorsService {
         return visitorsRepository.save(visitor);
     }
 
-    public void deleteVisitor(Long id) {
+    public void deleteVisitor(String id) {
         visitorsRepository.deleteById(id);
     }
     public boolean isEmailRegistered(String email) {

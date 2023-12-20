@@ -29,7 +29,7 @@ public class EnquiryController {
     }
 
     @GetMapping("/{id}")
-    public Enquiry getEnquiryById(@PathVariable Long id) {
+    public Enquiry getEnquiryById(@PathVariable String id) {
         Optional<Enquiry> enquiry = enquiryService.getEnquiryById(id);
         if (enquiry.isPresent()) {
             return enquiry.get();
@@ -45,12 +45,12 @@ public class EnquiryController {
     }
 
     @PutMapping("/{id}")
-    public Enquiry updateEnquiry(@PathVariable Long id, @RequestBody Enquiry updatedEnquiry) {
+    public Enquiry updateEnquiry(@PathVariable String id, @RequestBody Enquiry updatedEnquiry) {
         return enquiryService.updateEnquiry(id, updatedEnquiry);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEnquiry(@PathVariable Long id) {
+    public void deleteEnquiry(@PathVariable String id) {
         enquiryService.deleteEnquiry(id);
     }
 }

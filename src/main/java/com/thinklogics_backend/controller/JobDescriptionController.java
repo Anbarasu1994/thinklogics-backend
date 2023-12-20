@@ -26,7 +26,7 @@ public class JobDescriptionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JobDescription> getJobDescriptionById(@PathVariable Long id) {
+    public ResponseEntity<JobDescription> getJobDescriptionById(@PathVariable String id) {
         Optional<JobDescription> jobDescription = jobDescriptionService.getJobDescriptionById(id);
         return jobDescription.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -37,13 +37,13 @@ public class JobDescriptionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JobDescription> updateJobDescription(@PathVariable Long id, @RequestBody JobDescription updatedJobDescription) {
+    public ResponseEntity<JobDescription> updateJobDescription(@PathVariable String id, @RequestBody JobDescription updatedJobDescription) {
         JobDescription jobDescription = jobDescriptionService.updateJobDescription(id, updatedJobDescription);
         return ResponseEntity.ok(jobDescription);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteJobDescription(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteJobDescription(@PathVariable String id) {
         jobDescriptionService.deleteJobDescription(id);
         return ResponseEntity.noContent().build();
     }

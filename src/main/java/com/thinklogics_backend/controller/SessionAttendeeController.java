@@ -31,7 +31,7 @@ public class SessionAttendeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SessionAttendee> getAttendeeById(@PathVariable Long id) {
+    public ResponseEntity<SessionAttendee> getAttendeeById(@PathVariable String id) {
         Optional<SessionAttendee> attendee = attendeeService.getAttendeeById(id);
         return attendee.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -44,14 +44,14 @@ public class SessionAttendeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SessionAttendee> updateAttendee(@PathVariable Long id, @RequestBody SessionAttendee attendee) {
+    public ResponseEntity<SessionAttendee> updateAttendee(@PathVariable String id, @RequestBody SessionAttendee attendee) {
 //        attendee.setId(id); // Assuming there's an ID field in the SessionAttendee class
         SessionAttendee updatedAttendee = attendeeService.createOrUpdateAttendee(attendee);
         return new ResponseEntity<>(updatedAttendee, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAttendee(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAttendee(@PathVariable String id) {
         attendeeService.deleteAttendeeById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

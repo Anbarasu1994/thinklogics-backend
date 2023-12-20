@@ -29,7 +29,7 @@
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<JobApplication> getJobApplicationById(@PathVariable Long id) {
+        public ResponseEntity<JobApplication> getJobApplicationById(@PathVariable String id) {
             Optional<JobApplication> jobApplication = jobApplicationService.getJobApplicationById(id);
             return jobApplication.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         }
@@ -65,7 +65,7 @@
 
         @PutMapping("/{id}")
         public ResponseEntity<JobApplication> updateJobApplication(
-                @PathVariable Long id,
+                @PathVariable String id,
                 @RequestParam("resume") MultipartFile resume,
                 @ModelAttribute JobApplication updatedJobApplication
         ) {
@@ -74,7 +74,7 @@
         }
 
         @DeleteMapping("/{id}")
-        public ResponseEntity<Void> deleteJobApplication(@PathVariable Long id) {
+        public ResponseEntity<Void> deleteJobApplication(@PathVariable String id) {
             jobApplicationService.deleteJobApplication(id);
             return ResponseEntity.noContent().build();
         }

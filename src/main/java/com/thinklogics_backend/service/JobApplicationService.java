@@ -23,7 +23,7 @@ public class JobApplicationService {
         return jobApplicationRepository.findAll();
     }
 
-    public Optional<JobApplication> getJobApplicationById(Long id) {
+    public Optional<JobApplication> getJobApplicationById(String id) {
         return jobApplicationRepository.findById(id);
     }
 
@@ -31,7 +31,7 @@ public class JobApplicationService {
         return jobApplicationRepository.save(jobApplication);
     }
 
-    public JobApplication updateJobApplication(Long id, JobApplication updatedJobApplication, MultipartFile resume) {
+    public JobApplication updateJobApplication(String id, JobApplication updatedJobApplication, MultipartFile resume) {
         Optional<JobApplication> existingJobApplication = jobApplicationRepository.findById(id);
         if (existingJobApplication.isPresent()) {
             JobApplication jobApp = existingJobApplication.get();
@@ -51,7 +51,7 @@ public class JobApplicationService {
         }
     }
 
-    public void deleteJobApplication(Long id) {
+    public void deleteJobApplication(String id) {
         jobApplicationRepository.deleteById(id);
     }
 }

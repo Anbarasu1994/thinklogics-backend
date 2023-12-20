@@ -35,20 +35,20 @@ public class SessionController {
         return ResponseEntity.ok(sessions);
     }
    @GetMapping("/{id}")
-    public Optional<Session> getSessionById(@PathVariable Long id){
+    public Optional<Session> getSessionById(@PathVariable String id){
         return sessionService.getById(id);
    }
 
     // Update an existing session
     @PutMapping("/{id}")
-    public ResponseEntity<Session> updateSession(@PathVariable Long id, @RequestBody Session updatedSession) {
+    public ResponseEntity<Session> updateSession(@PathVariable String id, @RequestBody Session updatedSession) {
         Session session = sessionService.updateSession(id, updatedSession);
         return ResponseEntity.ok(session);
     }
 
     // Delete a session by ID and return a success message
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSession(@PathVariable Long id) {
+    public ResponseEntity<String> deleteSession(@PathVariable String id) {
         String deletedSession = sessionService.deleteSession(id);
         if (deletedSession != null) {
             return ResponseEntity.ok("Session with ID " + id + " deleted successfully.");

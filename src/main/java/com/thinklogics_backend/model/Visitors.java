@@ -1,24 +1,22 @@
 package com.thinklogics_backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Builder
 @AllArgsConstructor
-@Data
 @NoArgsConstructor
-@Entity
+@Document(collection = "visitors") // Specify the collection name in MongoDB
 public class Visitors {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String name;
     private String email;
     private String phoneNumber;

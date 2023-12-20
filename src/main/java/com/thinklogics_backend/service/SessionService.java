@@ -6,9 +6,9 @@ import com.thinklogics_backend.model.Visitors;
 import com.thinklogics_backend.repository.SessionRepository;
 import com.thinklogics_backend.repository.UserRepository;
 import com.thinklogics_backend.repository.VisitorsRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -73,11 +73,11 @@ private VisitorsRepository visitorsRepository;
         // You can customize this method further, for example, to filter or sort the sessions
         return sessionRepository.findAll();
     }
-    public Optional<Session> getById(Long id){
+    public Optional<Session> getById(String id){
     return sessionRepository.findById(id);
     }
 
-    public Session updateSession(Long id, Session updatedSession) {
+    public Session updateSession(String id, Session updatedSession) {
         Optional<Session> existingSession = sessionRepository.findById(id);
 
         if (existingSession.isPresent()) {
@@ -100,7 +100,7 @@ private VisitorsRepository visitorsRepository;
     }
 
 
-    public String deleteSession(Long id) {
+    public String deleteSession(String id) {
         Optional<Session> sessionOptional = sessionRepository.findById(id);
 
         if (sessionOptional.isPresent()) {
