@@ -2,6 +2,7 @@ package com.thinklogics_backend.config;
 
 import com.thinklogics_backend.config.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -25,10 +26,13 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig   {
+public class SecurityConfig {
 
-    private final AuthenticationProvider authenticationProvider;
-    private final JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+    @Autowired
+
+    private JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,7 +41,7 @@ public class SecurityConfig   {
 
                 .csrf(AbstractHttpConfigurer::disable)
 
-                .authorizeHttpRequests(auth->{
+                .authorizeHttpRequests(auth -> {
                     auth
 //                            .requestMatchers("/user/login","/user/register").permitAll()
 //                            .requestMatchers("/Admin/**").hasAuthority("ADMIN")
@@ -50,19 +54,13 @@ public class SecurityConfig   {
                             .authenticated();
                 })
 
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
-
-
-
-
-
 
 
 }

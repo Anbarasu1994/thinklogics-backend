@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 @RequestMapping("/Admin/api/sessions")
 public class SessionController {
     @Autowired
