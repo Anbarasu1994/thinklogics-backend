@@ -39,9 +39,12 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private JavaMailSender javaMailSender;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
+    @Autowired
+    private  JwtUtils jwtUtils;
+    @Autowired
+    private  AuthenticationManager authenticationManager;
 
     @Value("${spring.mail.host}")
     private String emailHost;
@@ -121,19 +124,15 @@ public class UserService {
         return MyResponse.builder().statusText("OTP has been sent to your email for verification.").user(storedUser).build();
     }
 
-    @Transactional
-    public void sendEmail(String toEmail, String subject, String message) {
+    private void sendEmail(String toEmail, String subject, String message) {
         try {
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-
-            helper.setTo(toEmail);
-            helper.setSubject(subject);
-            helper.setText(message, true);
-
-            javaMailSender.send(mimeMessage);
-        } catch (jakarta.mail.MessagingException e) {
-            throw new RuntimeException(e);
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(toEmail);
+            mailMessage.setSubject(subject);
+            mailMessage.setText(message);
+            javaMailSender.send(mailMessage);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
     }
 
@@ -167,7 +166,7 @@ public class UserService {
         return userRepository.save(updatedUser);
     }
 
-    public String deleteUser(long userId) {
+    public String deleteUser(String userId) {
         userRepository.deleteById( userId);
         return "Deleted user with ID " + userId;
     }
@@ -176,8 +175,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(long userId) {
-        return userRepository.findByUserId(userId);
+    public Optional<User> getUserById(String userId) {
+        return userRepository.findById(userId);
     }
 
     public ResponseEntity<MyResponse> authenticate(Login login) {

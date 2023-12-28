@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/attendees")
 public class SessionAttendeeController {
@@ -24,40 +23,42 @@ public class SessionAttendeeController {
         this.attendeeService = attendeeService;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<SessionAttendee>> getAllAttendees() {
         List<SessionAttendee> attendees = attendeeService.getAllAttendees();
         return new ResponseEntity<>(attendees, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SessionAttendee> getAttendeeById(@PathVariable Long id) {
+    public ResponseEntity<SessionAttendee> getAttendeeById(@PathVariable String id) {
         Optional<SessionAttendee> attendee = attendeeService.getAttendeeById(id);
         return attendee.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<SessionAttendee> createAttendee(@RequestBody SessionAttendee attendee) {
         SessionAttendee createdAttendee = attendeeService.createOrUpdateAttendee(attendee);
         return new ResponseEntity<>(createdAttendee, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SessionAttendee> updateAttendee(@PathVariable Long id, @RequestBody SessionAttendee attendee) {
+    @PutMapping("update/{id}")
+    public ResponseEntity<SessionAttendee> updateAttendee(@PathVariable String id, @RequestBody SessionAttendee attendee) {
 //        attendee.setId(id); // Assuming there's an ID field in the SessionAttendee class
         SessionAttendee updatedAttendee = attendeeService.createOrUpdateAttendee(attendee);
         return new ResponseEntity<>(updatedAttendee, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAttendee(@PathVariable Long id) {
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> deleteAttendee(@PathVariable String id) {
         attendeeService.deleteAttendeeById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/exists/{phoneNumber}")
-    public ResponseEntity<Boolean> checkUserExistsByPhoneNumber(@PathVariable String phoneNumber) {
-        boolean userExists = attendeeService.checkUserExistsByPhoneNumber(phoneNumber);
-        return new ResponseEntity<>(userExists, HttpStatus.OK);
-    }
+
+@GetMapping("/existsByNumber")
+public ResponseEntity<Boolean> checkUserExistsByPhoneNumber(@RequestParam String phoneNumber) {
+    boolean userExists = attendeeService.checkUserExistsByPhoneNumber(phoneNumber);
+    return new ResponseEntity<>(userExists, HttpStatus.OK);
+}
+
 }

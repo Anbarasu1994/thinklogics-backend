@@ -21,7 +21,7 @@ public class JobDescriptionService {
         return jobDescriptionRepository.findAll();
     }
 
-    public Optional<JobDescription> getJobDescriptionById(Long id) {
+    public Optional<JobDescription> getJobDescriptionById(String id) {
         return jobDescriptionRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class JobDescriptionService {
         return jobDescriptionRepository.save(jobDescription);
     }
 
-    public JobDescription updateJobDescription(Long id, JobDescription updatedJobDescription) {
+    public JobDescription updateJobDescription(String id, JobDescription updatedJobDescription) {
         Optional<JobDescription> existingJobDescription = jobDescriptionRepository.findById(id);
         if (existingJobDescription.isPresent()) {
             JobDescription jobDesc = existingJobDescription.get();
@@ -44,7 +44,7 @@ public class JobDescriptionService {
         }
     }
 
-    public void deleteJobDescription(Long id) {
+    public void deleteJobDescription(String id) {
         jobDescriptionRepository.deleteById(id);
     }
 }

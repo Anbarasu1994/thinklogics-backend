@@ -1,7 +1,6 @@
 package com.thinklogics_backend.model;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Register {
-    private int userId;
+    private String userId;
     private String firstName;
     private String phoneNumber;
     private String lastName;

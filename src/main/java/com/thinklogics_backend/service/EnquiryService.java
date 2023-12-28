@@ -21,7 +21,7 @@ public class EnquiryService {
         return enquiryRepository.findAll();
     }
 
-    public Optional<Enquiry> getEnquiryById(Long id) {
+    public Optional<Enquiry> getEnquiryById(String id) {
         return enquiryRepository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class EnquiryService {
         return enquiryRepository.save(enquiry);
     }
 
-    public Enquiry updateEnquiry(Long id, Enquiry updatedEnquiry) {
+    public Enquiry updateEnquiry(String id, Enquiry updatedEnquiry) {
         if (enquiryRepository.existsById(id)) {
             updatedEnquiry.setId(id);
             return enquiryRepository.save(updatedEnquiry);
@@ -38,7 +38,7 @@ public class EnquiryService {
         }
     }
 
-    public void deleteEnquiry(Long id) {
+    public void deleteEnquiry(String id) {
         enquiryRepository.deleteById(id);
     }
 }

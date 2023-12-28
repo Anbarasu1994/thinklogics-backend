@@ -6,14 +6,18 @@ import com.thinklogics_backend.model.User;
 import com.thinklogics_backend.response.MyResponse;
 import com.thinklogics_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+//@CrossOrigin(origins = "*")
 @CrossOrigin("*")
+
 @RequiredArgsConstructor
 public class UserController {
 
@@ -49,5 +53,16 @@ public class UserController {
     @GetMapping("/all")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/findById/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable String userId) {
+        Optional<User> userOptional = userService.getUserById(userId);
+
+        if (userOptional.isPresent()) {
+            return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
