@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/jobDescriptions")
 public class JobDescriptionController {
     private final JobDescriptionService jobDescriptionService;
@@ -20,29 +19,29 @@ public class JobDescriptionController {
         this.jobDescriptionService = jobDescriptionService;
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<JobDescription> getAllJobDescriptions() {
         return jobDescriptionService.getAllJobDescriptions();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<JobDescription> getJobDescriptionById(@PathVariable String id) {
         Optional<JobDescription> jobDescription = jobDescriptionService.getJobDescriptionById(id);
         return jobDescription.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public JobDescription createJobDescription(@RequestBody JobDescription jobDescription) {
         return jobDescriptionService.createJobDescription(jobDescription);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<JobDescription> updateJobDescription(@PathVariable String id, @RequestBody JobDescription updatedJobDescription) {
         JobDescription jobDescription = jobDescriptionService.updateJobDescription(id, updatedJobDescription);
         return ResponseEntity.ok(jobDescription);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> deleteJobDescription(@PathVariable String id) {
         jobDescriptionService.deleteJobDescription(id);
         return ResponseEntity.noContent().build();

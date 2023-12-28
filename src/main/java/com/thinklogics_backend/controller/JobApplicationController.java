@@ -23,17 +23,17 @@
             this.jobApplicationService = jobApplicationService;
         }
 
-        @GetMapping
+        @GetMapping("/list")
         public List<JobApplication> getAllJobApplications() {
             return jobApplicationService.getAllJobApplications();
         }
 
-        @GetMapping("/{id}")
+        @GetMapping("/getById/{id}")
         public ResponseEntity<JobApplication> getJobApplicationById(@PathVariable String id) {
             Optional<JobApplication> jobApplication = jobApplicationService.getJobApplicationById(id);
             return jobApplication.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         }
-        @PostMapping
+        @PostMapping("/create")
         public ResponseEntity<JobApplication> createJobApplication(
                 @RequestParam("name") String name,
                 @RequestParam("email") String email,
@@ -63,7 +63,7 @@
 
 
 
-        @PutMapping("/{id}")
+        @PutMapping("/updateById/{id}")
         public ResponseEntity<JobApplication> updateJobApplication(
                 @PathVariable String id,
                 @RequestParam("resume") MultipartFile resume,
@@ -73,7 +73,7 @@
             return ResponseEntity.ok(jobApplication);
         }
 
-        @DeleteMapping("/{id}")
+        @DeleteMapping("/deleteById/{id}")
         public ResponseEntity<Void> deleteJobApplication(@PathVariable String id) {
             jobApplicationService.deleteJobApplication(id);
             return ResponseEntity.noContent().build();

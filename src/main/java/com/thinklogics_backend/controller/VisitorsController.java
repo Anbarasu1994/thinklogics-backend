@@ -37,7 +37,7 @@ public class VisitorsController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<String> saveVisitor(@RequestBody Visitors newVisitor) {
         if (visitorsRepository.existsByEmail(newVisitor.getEmail())) {
             return ResponseEntity.badRequest().body("Visitor already exists");
@@ -48,13 +48,13 @@ public class VisitorsController {
     }
 
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<Visitors>> getAllVisitors() {
         List<Visitors> visitors = visitorsService.getAllVisitors();
         return ResponseEntity.ok(visitors);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<Visitors> getVisitorById(@PathVariable String id) {
         return visitorsService.getVisitorById(id)
                 .map(ResponseEntity::ok)
@@ -62,7 +62,7 @@ public class VisitorsController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateById/{id}")
     public ResponseEntity<Visitors> updateVisitor(@PathVariable String id, @RequestBody Visitors visitor) {
         if (!visitorsService.getVisitorById(id).isPresent()) {
             return ResponseEntity.notFound().build();
@@ -72,7 +72,7 @@ public class VisitorsController {
         return ResponseEntity.ok(updatedVisitor);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<Void> deleteVisitor(@PathVariable String id) {
         if (!visitorsService.getVisitorById(id).isPresent()) {
             return ResponseEntity.notFound().build();

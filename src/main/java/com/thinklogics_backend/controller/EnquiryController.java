@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000, http://127.0.0.1:5501")
 
-@CrossOrigin("*")
 @RequestMapping("/enquiries")
 public class EnquiryController {
 
@@ -23,7 +21,7 @@ public class EnquiryController {
         this.enquiryService = enquiryService;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public List<Enquiry> getAllEnquiries() {
         return enquiryService.getAllEnquiries();
     }
@@ -38,7 +36,7 @@ public class EnquiryController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Enquiry createEnquiry(@RequestBody Enquiry enquiry) {
         messagingTemplate.convertAndSend("/topic/newEnquiries", enquiry);
         return enquiryService.createEnquiry(enquiry);

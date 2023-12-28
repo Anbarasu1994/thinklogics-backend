@@ -176,7 +176,7 @@ public class UserService {
     }
 
     public Optional<User> getUserById(String userId) {
-        return userRepository.findByUserId(userId);
+        return userRepository.findById(userId);
     }
 
     public ResponseEntity<MyResponse> authenticate(Login login) {
